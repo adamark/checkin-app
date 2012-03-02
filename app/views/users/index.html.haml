@@ -1,0 +1,52 @@
+%h1 Where you at?
+#twoway
+  .wrapper
+    .content
+      .bgh2.academy
+        %h2#academy Academy
+      %table
+        - @academy.each do |user|
+          - if user.updated_at > Time.now - 3.hours and user.updated_at < 1.minute.from_now
+            %tr
+              %td
+                .handle-image= image_tag( user.profile_pic )
+                %span.handle= user.full_name
+                - if user.status == "help"
+                  %span I need help!
+      %hr
+      %h3 En Route
+      %hr
+      %table
+        - @academy.each do |user|
+          - if user.updated_at > Time.now
+            %tr
+              %td
+                .handle-image= image_tag( user.profile_pic )
+                %span.handle= user.full_name
+                %span.other Be there in #{distance_of_time_in_words(Time.now, user.updated_at)}
+                / - if current_user?
+                /   = button_to "I'm Here!", { :action => "update", :id => @user.status }
+  .wrapper
+    .content
+      .bgh2.cloud
+        %h2#cloud Cloud
+      %table
+        - @cloud.each do |user|
+          - if user.updated_at > Time.now - 3.hours and user.updated_at < 1.minute.from_now
+            %tr
+              %td
+                .handle-image= image_tag( user.profile_pic )
+                %span.handle= user.full_name
+      %hr
+      %h3 En Route
+      %hr
+      %table
+        - @cloud.each do |user|
+          - if user.updated_at > Time.now
+            %tr
+              %td
+                .handle-image= image_tag( user.profile_pic )
+                %span.handle= user.full_name
+                %span.other Be there in #{distance_of_time_in_words(Time.now, user.updated_at)}
+                / - if current_user?
+                /   = button_to "I'm Here!", { :action => "update", :id => @user.id }
